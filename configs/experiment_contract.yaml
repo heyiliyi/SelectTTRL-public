@@ -1,0 +1,44 @@
+paper_revision: latest
+anonymous_release: true
+backbones:
+  - Qwen/Qwen3-8B
+  - Qwen/Qwen2.5-7B-Instruct
+decoding:
+  thinking: false
+  ttrl_vote_n: 32
+  ttrl_train_n: 16
+  ttrl_temperature: 0.6
+  evaluation_temperature: 0.6
+  max_context_tokens: 8192
+  max_response_tokens: 4096
+selection:
+  lower_percentile: 0.25
+  upper_percentile: 0.60
+  tie_break: question_id
+  selected_fraction: 0.35
+  finite_set_rounding: independent endpoints, slice [floor(lower*N), floor(upper*N))
+  baseline_count: match the COS interval count
+training:
+  train_batch_size_by_dataset: {math500: 16, gpqa: 16, mmlu_pro_stem: 8, aime24: 8, aime25: 8, amc: 8}
+  ppo_mini_batch_size: 1
+  ppo_micro_batch_size_per_gpu: 1
+  rollout_backend: vllm
+  optimizer: AdamW
+  scheduler: cosine
+  peak_learning_rate: 5.0e-7
+  devices: 4
+rq2:
+  layer_hidden_index: 21
+  alphas: [-1.0, -0.5, 0.5, 1.0]
+  token_scope: boundary_and_response
+rq3:
+  sae_topk: 50
+  candidate_pool: top50_by_mean_nonzero_activation_on_complete_endpoint_rows
+  sae_layer_file: layer20.sae.pt
+  ablation: h_prime_equals_h_minus_zj_times_decoder_j
+  token_scope: response_only
+  preserves: [other_features, decoder_bias, local_reconstruction_residual]
+  selected_features: [31368, 52642, 41030, 3447, 48965]
+rq4:
+  source_datasets: [PIQA, CommonsenseQA, MMLU-Pro, LogiQA-2.0, GPQA, TruthfulQA]
+  target_datasets: [MATH-500, AIME24, AIME25, AMC_2022_2023]

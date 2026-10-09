@@ -1,0 +1,17 @@
+{
+  "schema": "selectttrl_sae_manifest_v1",
+  "repository": "Qwen/SAE-Res-Qwen3-8B-Base-W64K-L0_50",
+  "revision": "9b7d647127c303dd371e5dbd992236bd9799b171",
+  "filename": "layer20.sae.pt",
+  "checkpoint_sha256": "c3e916994cf5a2b2a34ad7c7d19b62fc5561d085cef0353256e5390efbf53564",
+  "layer": 20,
+  "hidden_index": 21,
+  "hidden_size": 4096,
+  "feature_count": 65536,
+  "state_keys": ["W_enc", "W_dec", "b_enc", "b_dec"],
+  "release_encoder": "linear_relu_topk",
+  "centered_input": false,
+  "input_normalization": "none",
+  "topk": 50,
+  "note": "Identifies the checkpoint; preserves v1 encoding. The upstream README example uses linear Top-K without explicit ReLU; verify against the original experiment if top-K preactivations are nonpositive."
+}
